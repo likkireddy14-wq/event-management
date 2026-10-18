@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likki's Event Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="#" data-page="home">
+        <span class="brand-logo">L</span>
+        <span>Likki's <b>Events</b><small>COLLEGE EVENT MANAGEMENT</small></span>
+    </a>
+    <nav>
+        <button data-page="home" class="nav-btn active">Home</button>
+        <button data-page="events" class="nav-btn">Read / Events</button>
+        <button data-page="create" class="nav-btn">+ Create</button>
+        <button data-page="events" class="nav-btn">Update</button>
+        <button data-page="events" class="nav-btn">Delete</button>
+    </nav>
+</header>
+
+<main class="container">
+    <div id="notice" class="notice" hidden></div>
+
+    <section id="homePage">
+        <div class="hero">
+            <div class="hero-content">
+                <span class="eyebrow">MAKE CAMPUS MEMORABLE</span>
+                <h1>Every Event.<br>One Beautiful Experience.</h1>
+                <p>Plan, organise and manage your college events in one place — from cultural fests and workshops to seminars and sports days.</p>
+                <div class="hero-buttons">
+                    <button class="btn primary" data-page="events">Explore Events →</button>
+                    <button class="btn outline" data-page="create">＋ Create Event</button>
+                </div>
+            </div>
+            <div class="hero-image" role="img" aria-label="College festival"></div>
+        </div>
+
+        <div class="stats">
+            <article class="stat"><span>Total Events</span><strong id="totalEvents">0</strong><small>All event records</small></article>
+            <article class="stat"><span>Event Types</span><strong id="totalTypes">0</strong><small>Categories organised</small></article>
+            <article class="stat"><span>Upcoming Events</span><strong id="upcomingEvents">0</strong><small>Scheduled from today</small></article>
+        </div>
+
+        <section class="section-heading">
+            <div><span class="eyebrow">EXPLORE THE HIGHLIGHTS</span><h2>Featured Events</h2></div>
+            <button class="btn dark" data-page="events">View All Events →</button>
+        </section>
+        <div id="eventCards" class="event-cards"></div>
+    </section>
+
+    <section id="eventsPage" hidden>
+        <div class="section-heading page-heading">
+            <div><span class="eyebrow">YOUR EVENT DIRECTORY</span><h1>Manage Events</h1><p>Read, search, update and delete your college events.</p></div>
+            <button class="btn primary" data-page="create">＋ Create Event</button>
+        </div>
+
+        <section class="panel">
+            <div class="filters">
+                <input id="searchInput" type="search" placeholder="Search event, venue or type...">
+                <select id="typeFilter">
+                    <option value="">All event types</option>
+                    <option>Cultural</option>
+                    <option>Technical</option>
+                    <option>Workshop</option>
+                    <option>Seminar</option>
+                    <option>Sports</option>
+                    <option>Academic</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>EVENT</th><th>TYPE</th><th>DATE</th>
+                            <th>VENUE</th><th>DESCRIPTION</th><th>OPERATIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsTable"></tbody>
+                </table>
+            </div>
+            <div id="emptyState" class="empty-state" hidden>
+                <h3>No events found</h3>
+                <p>Create your first event or change your search.</p>
+                <button class="btn primary" data-page="create">Create Event</button>
+            </div>
+            <p id="recordCount" class="record-count"></p>
+        </section>
+    </section>
+
+    <section id="createPage" hidden>
+        <div class="section-heading page-heading">
+            <div><span class="eyebrow">EVENT DETAILS</span><h1 id="formTitle">Create New Event</h1><p>Enter the event details below.</p></div>
+            <button class="btn outline-dark" id="cancelBtn">← Back to Events</button>
+        </div>
+
+        <section class="panel form-panel">
+            <form id="eventForm">
+                <input type="hidden" id="eventId">
+
+                <div class="photo-upload">
+                    <img id="imagePreview" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=300&q=80" alt="Event preview">
+                    <div><label for="image">Event cover photo</label>
+                        <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+                        <small>Optional · JPG, PNG or WEBP · Maximum 5 MB</small>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="field"><label for="event_name">Event Name *</label><input id="event_name" name="event_name" maxlength="150" required placeholder="e.g. Annual College Fest"></div>
+                    <div class="field"><label for="event_type">Event Type *</label>
+                        <select id="event_type" name="event_type" required>
+                            <option value="">Select type</option><option>Cultural</option><option>Technical</option><option>Workshop</option><option>Seminar</option><option>Sports</option><option>Academic</option><option>Other</option>
+                        </select>
+                    </div>
+                    <div class="field"><label for="event_date">Event Date *</label><input type="date" id="event_date" name="event_date" required></div>
+                    <div class="field"><label for="venue">Venue *</label><input id="venue" name="venue" maxlength="200" required placeholder="e.g. College Auditorium"></div>
+                    <div class="field full"><label for="description">Event Description *</label><textarea id="description" name="description" rows="5" required placeholder="Describe the event, activities and purpose..."></textarea></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="cancelFormBtn" class="btn outline-dark">Cancel</button>
+                    <button type="reset" id="resetBtn" class="btn outline-dark">Reset</button>
+                    <button type="submit" id="saveBtn" class="btn primary">Create Event</button>
+                </div>
+            </form>
+        </section>
+    </section>
+
+    <footer><span>© 2026 Likki's Event Management</span><span>Celebrate ideas. Create memories. Manage events.</span></footer>
+</main>
+
+<dialog id="detailsDialog">
+    <button id="closeDetails" class="close-dialog" aria-label="Close">×</button>
+    <div id="eventDetails"></div>
+</dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
